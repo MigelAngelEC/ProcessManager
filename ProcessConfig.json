@@ -1,0 +1,455 @@
+{
+    "version": "1.1",
+    "lastUpdated": "2025-06-10",
+    "description": "Configuracion de categorias y procesos para Process Manager Pro - Actualizada",
+    "categories": {
+        "ASUS Software": {
+            "description": "Software y servicios de ASUS (motherboards, laptops)",
+            "icon": "🔧",
+            "color": "#FF6B35",
+            "priority": "high",
+            "aggressiveKill": true,
+            "processes": [
+                "asus_framework",
+                "ArmourySocketServer",
+                "ADU",
+                "ASUS DriverHub",
+                "ArmourySwAgent",
+                "AcPowerNotification",
+                "atkexComSvc",
+                "AsusCertService",
+                "AsusFanControlService",
+                "AsusUpdateCheck",
+                "AsusAppService",
+                "ASUSOptimization"
+            ],
+            "relatedServices": [
+                "AsusAppService",
+                "ASUSOptimization",
+                "ASUS Com Service"
+            ]
+        },
+        "Adobe Software": {
+            "description": "Adobe Creative Suite, Acrobat y servicios relacionados",
+            "icon": "🎨",
+            "color": "#FF0000",
+            "priority": "high",
+            "aggressiveKill": true,
+            "processes": [
+                "Adobe",
+                "Acrobat",
+                "AdobeCollabSync",
+                "AdobeNotificationClient",
+                "AdobeUpdateService",
+                "AdobeARM",
+                "CreativeCloud",
+                "CCXProcess",
+                "CCLibrary",
+                "AdobeIPCBroker",
+                "AdobeCEF",
+                "AdobeDesktop",
+                "Photoshop",
+                "Illustrator",
+                "Premiere",
+                "AfterEffects"
+            ],
+            "relatedServices": [
+                "AdobeUpdateService",
+                "AdobeARMservice",
+                "Adobe Genuine Monitor Service"
+            ]
+        },
+        "AVG Software": {
+            "description": "AVG Antivirus, TuneUp y VPN",
+            "icon": "🛡️",
+            "color": "#FF8C00",
+            "priority": "high",
+            "aggressiveKill": true,
+            "processes": [
+                "TuneupUI",
+                "TuneupSvc",
+                "Vpn",
+                "VpnSvc",
+                "AVGSvc",
+                "avgnt"
+            ],
+            "relatedServices": [
+                "TuneupSvc",
+                "AVGTuneup",
+                "AVG Antivirus",
+                "AVG VPN"
+            ]
+        },
+        "Epson Software": {
+            "description": "Software y servicios de impresoras Epson",
+            "icon": "🖨️",
+            "color": "#0066CC",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "escsvc64",
+                "EpsonScanSmart",
+                "EpsonCreativePrint",
+                "EpsonScanOCR",
+                "EpsonEventManager",
+                "EpsonNetConfig",
+                "EpsonCustomerResearchParticipation",
+                "EpsonSoftwareUpdater",
+                "EpsonConnect"
+            ],
+            "relatedServices": [
+                "Epson Scanner Service",
+                "EpsonNet Print",
+                "Epson Status Monitor"
+            ]
+        },
+        "Microsoft Office": {
+            "description": "Microsoft Office Suite y servicios relacionados",
+            "icon": "📄",
+            "color": "#0078D4",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "OfficeClickToRun",
+                "WINWORD",
+                "EXCEL",
+                "POWERPNT",
+                "OUTLOOK",
+                "ONENOTE",
+                "MSACCESS",
+                "OfficeC2RClient",
+                "integrator",
+                "GROOVE",
+                "Teams",
+                "msedge_proxy",
+                "OfficeHub"
+            ],
+            "relatedServices": [
+                "Microsoft Office Click-to-Run Service",
+                "Office Software Protection Platform"
+            ]
+        },
+        "Gaming Software": {
+            "description": "Software de gaming y launchers",
+            "icon": "🎮",
+            "color": "#FF4500",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "RiotClientServices",
+                "RiotClientCrashHandler",
+                "gamingservices",
+                "gamingservicesnet",
+                "GameInputSvc",
+                "PnkBstrA",
+                "PnkBstrB"
+            ],
+            "relatedServices": [
+                "Riot Vanguard",
+                "GamingServices",
+                "GameInput Host Service"
+            ]
+        },
+        "Intel Software": {
+            "description": "Software y servicios de Intel",
+            "icon": "⚡",
+            "color": "#0071C5",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "OneApp.IGCC.WinService",
+                "XtuService",
+                "ipfsvc",
+                "ipf_uf",
+                "ipf_helper",
+                "Intel_PIE_Service",
+                "WMIRegistrationService"
+            ],
+            "relatedServices": [
+                "Intel Graphics Command Center Service",
+                "Intel Innovation Platform Framework Service",
+                "Intel PROSet/Wireless WiFi Software"
+            ]
+        },
+        "NVIDIA Software": {
+            "description": "Software y servicios de NVIDIA",
+            "icon": "🎯",
+            "color": "#76B900",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "NVDisplay.Container",
+                "nvcontainer",
+                "NVDisplay",
+                "nvidia-web-helper",
+                "NVIDIA Share",
+                "NVIDIA Backend",
+                "nvsphelper64"
+            ],
+            "relatedServices": [
+                "NVIDIA Display Container LS",
+                "NVIDIA LocalSystem Container"
+            ]
+        },
+        "Logitech Software": {
+            "description": "Software de periféricos Logitech",
+            "icon": "🖱️",
+            "color": "#00B8FC",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "lghub_updater",
+                "lghub_system_tray",
+                "lghub_agent",
+                "logi_crashpad_handler",
+                "logi_lamparray_service",
+                "LogiOverlay"
+            ],
+            "relatedServices": [
+                "LampArray Translation Service",
+                "LGHUB Updater Service"
+            ]
+        },
+        "Google Software": {
+            "description": "Software y servicios de Google",
+            "icon": "🔍",
+            "color": "#4285F4",
+            "priority": "low",
+            "aggressiveKill": false,
+            "processes": [
+                "GooglePlayGamesServices",
+                "crashpad_handler",
+                "GoogleUpdate",
+                "GoogleCrashHandler"
+            ],
+            "relatedServices": [
+                "Google Play Games Services",
+                "Google Update Service"
+            ]
+        },
+        "Kaspersky Software": {
+            "description": "Kaspersky Antivirus y servicios de seguridad",
+            "icon": "🛡️",
+            "color": "#006F5C",
+            "priority": "high",
+            "aggressiveKill": false,
+            "processes": [
+                "avp",
+                "avpui",
+                "klnagent",
+                "kl_service",
+                "ksde",
+                "klwtblfs"
+            ],
+            "relatedServices": [
+                "Kaspersky Anti-Virus Service",
+                "Kaspersky Security Center"
+            ]
+        },
+        "Development Tools": {
+            "description": "Herramientas de desarrollo y programación",
+            "icon": "💻",
+            "color": "#007ACC",
+            "priority": "low",
+            "aggressiveKill": false,
+            "processes": [
+                "Code",
+                "GitHubDesktop",
+                "node",
+                "npm",
+                "git",
+                "python",
+                "javaw",
+                "java"
+            ],
+            "relatedServices": []
+        },
+        "Comunicacion": {
+            "description": "Apps de mensajeria y comunicacion",
+            "icon": "💬",
+            "color": "#25D366",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "WhatsApp",
+                "ChatGPT",
+                "claude",
+                "copilot",
+                "Telegram",
+                "Discord",
+                "Slack",
+                "Teams"
+            ],
+            "relatedServices": []
+        },
+        "Apple/iCloud": {
+            "description": "Servicios y aplicaciones de Apple/iCloud",
+            "icon": "🍎",
+            "color": "#007AFF",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "ApplePhotoStreams",
+                "iCloudHome",
+                "iCloudDrive",
+                "iCloudPhotos",
+                "iCloudCKKS",
+                "iCloudOutlookConfig",
+                "secd",
+                "APSDaemon",
+                "iTunes",
+                "AppleApplicationSupport"
+            ],
+            "relatedServices": [
+                "Apple Mobile Device Service",
+                "Bonjour Service"
+            ]
+        },
+        "Corsair/iCUE": {
+            "description": "Software de perifericos Corsair",
+            "icon": "🎮",
+            "color": "#FFD700",
+            "priority": "medium",
+            "aggressiveKill": true,
+            "processes": [
+                "iCUE",
+                "QmlRenderer",
+                "CorsairCpuIdService",
+                "CorsairDeviceControlService",
+                "iCUEDevicePluginHost",
+                "iCUEUpdateService",
+                "CorsairGamingAudioCfgService"
+            ],
+            "relatedServices": [
+                "CorsairService",
+                "iCUEService"
+            ]
+        },
+        "Elgato Software": {
+            "description": "Software de captura y streaming Elgato",
+            "icon": "🎥",
+            "color": "#0066CC",
+            "priority": "low",
+            "aggressiveKill": false,
+            "processes": [
+                "ElgatoAudioControlServer",
+                "ElgatoAudioControlServerWatcher",
+                "StreamDeck",
+                "Elgato",
+                "4KCaptureUtility",
+                "GameCapture",
+                "CameraHub"
+            ],
+            "relatedServices": []
+        },
+        "Utilidades Sistema": {
+            "description": "Herramientas y utilidades del sistema",
+            "icon": "🔧",
+            "color": "#6A5ACD",
+            "priority": "low",
+            "aggressiveKill": false,
+            "processes": [
+                "Everything",
+                "DisplayFusion",
+                "DisplayFusionHookApp",
+                "PowerToys",
+                "RTSS",
+                "RTSSHooksLoader",
+                "EncoderServer",
+                "MSIAfterburner",
+                "ShareX",
+                "TranslucentTB",
+                "TrafficMonitor_ToastService",
+                "EarTrumpet",
+                "FluentFlyout",
+                "QuickLook"
+            ],
+            "relatedServices": []
+        },
+        "Driver Booster": {
+            "description": "IObit Driver Booster y servicios",
+            "icon": "⚡",
+            "color": "#FF4500",
+            "priority": "medium",
+            "aggressiveKill": false,
+            "processes": [
+                "Scheduler",
+                "DriverBooster",
+                "DBAgent",
+                "LiveUpdate"
+            ],
+            "relatedServices": [
+                "IObit Unlocker Service"
+            ]
+        },
+        "Fondos/Personalizacion": {
+            "description": "Wallpaper Engine y personalizacion",
+            "icon": "🎨",
+            "color": "#FF1493",
+            "priority": "low",
+            "aggressiveKill": false,
+            "processes": [
+                "wallpaper32",
+                "wallpaperservice32",
+                "Rainmeter",
+                "DesktopOK"
+            ],
+            "relatedServices": []
+        },
+        "Widgets/Microsoft": {
+            "description": "Widgets y servicios de Microsoft Edge",
+            "icon": "📱",
+            "color": "#0078D4",
+            "priority": "low",
+            "aggressiveKill": false,
+            "processes": [
+                "Widgets",
+                "msedgewebview2",
+                "StartMenuExperienceHost",
+                "PhoneExperienceHost",
+                "WebView2",
+                "WidgetService"
+            ],
+            "relatedServices": [
+                "Microsoft Edge Update Service"
+            ]
+        }
+    },
+    "globalSettings": {
+        "defaultTimeout": 2000,
+        "retryAttempts": 3,
+        "delayBetweenKills": 150,
+        "enableLogging": true,
+        "showProgressBar": true,
+        "confirmBeforeKill": true
+    },
+    "systemProtection": {
+        "criticalProcesses": [
+            "System",
+            "csrss",
+            "winlogon",
+            "services",
+            "lsass",
+            "smss",
+            "wininit",
+            "dwm",
+            "explorer",
+            "svchost",
+            "audiodg",
+            "WmiPrvSE",
+            "SearchIndexer",
+            "SearchHost",
+            "MsMpEng",
+            "MpDefenderCoreService",
+            "SecurityHealthService"
+        ],
+        "protectedServices": [
+            "Windows Security",
+            "Windows Update",
+            "Windows Defender",
+            "Audio Engine",
+            "WMI Performance Adapter",
+            "Windows Search"
+        ]
+    }
+}
