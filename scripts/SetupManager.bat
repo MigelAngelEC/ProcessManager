@@ -32,7 +32,7 @@ set "TOTAL_FILES=0"
 echo Verificando archivos principales:
 echo --------------------------------
 
-if exist "%INSTALL_DIR%ProcessConfig.json" (
+if exist "%INSTALL_DIR%config\ProcessConfig.json" (
     echo [✓] ProcessConfig.json - ENCONTRADO
     set /a FILES_FOUND+=1
 ) else (
@@ -40,7 +40,7 @@ if exist "%INSTALL_DIR%ProcessConfig.json" (
 )
 set /a TOTAL_FILES+=1
 
-if exist "%INSTALL_DIR%ConfigManager.ps1" (
+if exist "%INSTALL_DIR%src\core\ConfigManager.ps1" (
     echo [✓] ConfigManager.ps1 - ENCONTRADO  
     set /a FILES_FOUND+=1
 ) else (
@@ -48,7 +48,7 @@ if exist "%INSTALL_DIR%ConfigManager.ps1" (
 )
 set /a TOTAL_FILES+=1
 
-if exist "%INSTALL_DIR%ProcessManagerModular.ps1" (
+if exist "%INSTALL_DIR%src\core\ProcessManagerModular.ps1" (
     echo [✓] ProcessManagerModular.ps1 - ENCONTRADO
     set /a FILES_FOUND+=1
 ) else (
@@ -68,13 +68,13 @@ echo.
 echo Verificando archivos de respaldo:
 echo ---------------------------------
 
-if exist "%INSTALL_DIR%ProcessManager.ps1" (
+if exist "%INSTALL_DIR%src\legacy\ProcessManager.ps1" (
     echo [✓] ProcessManager.ps1 (clasico) - DISPONIBLE
 ) else (
     echo [!] ProcessManager.ps1 (clasico) - NO DISPONIBLE
 )
 
-if exist "%INSTALL_DIR%ProcessManagerSimple.ps1" (
+if exist "%INSTALL_DIR%src\legacy\ProcessManagerSimple.ps1" (
     echo [✓] ProcessManagerSimple.ps1 (consola) - DISPONIBLE
 ) else (
     echo [!] ProcessManagerSimple.ps1 (consola) - NO DISPONIBLE
@@ -121,7 +121,7 @@ echo.
 echo [VALIDACION] Probando configuracion...
 
 :: Probar carga de configuracion
-powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "try { $config = Get-Content '%INSTALL_DIR%ProcessConfig.json' | ConvertFrom-Json; Write-Host '[✓] Archivo JSON valido - Version: ' $config.version -ForegroundColor Green; Write-Host '[✓] Categorias encontradas: ' $config.categories.PSObject.Properties.Count -ForegroundColor Green } catch { Write-Host '[✗] Error en archivo JSON: ' $_.Exception.Message -ForegroundColor Red }" 2>nul
+powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "try { $config = Get-Content '%INSTALL_DIR%config\ProcessConfig.json' | ConvertFrom-Json; Write-Host '[✓] Archivo JSON valido - Version: ' $config.version -ForegroundColor Green; Write-Host '[✓] Categorias encontradas: ' $config.categories.PSObject.Properties.Count -ForegroundColor Green } catch { Write-Host '[✗] Error en archivo JSON: ' $_.Exception.Message -ForegroundColor Red }" 2>nul
 
 echo.
 echo ================================================================
@@ -135,11 +135,11 @@ echo    • Doble clic en "ProcessManager.bat"
 echo.
 echo 2. METODO MANUAL:
 echo    • Abrir PowerShell como Administrador
-echo    • Navegar a la carpeta: cd "%INSTALL_DIR%"  
+echo    • Navegar a la carpeta: cd "%INSTALL_DIR%src\core"  
 echo    • Ejecutar: .\ProcessManagerModular.ps1
 echo.
 echo 3. PERSONALIZACION:
-echo    • Editar "ProcessConfig.json" para agregar/quitar procesos
+echo    • Editar "config\ProcessConfig.json" para agregar/quitar procesos
 echo    • Cambiar prioridades, colores y categorias
 echo    • Las configuraciones se guardan en: %CONFIG_DIR%
 echo.
@@ -163,16 +163,16 @@ echo.
 echo ARCHIVOS FALTANTES - Necesitas descargar:
 echo.
 
-if not exist "%INSTALL_DIR%ProcessConfig.json" (
-    echo • ProcessConfig.json - Archivo de configuracion principal
+if not exist "%INSTALL_DIR%config\ProcessConfig.json" (
+    echo • config\ProcessConfig.json - Archivo de configuracion principal
 )
 
-if not exist "%INSTALL_DIR%ConfigManager.ps1" (
-    echo • ConfigManager.ps1 - Gestor de configuracion  
+if not exist "%INSTALL_DIR%src\core\ConfigManager.ps1" (
+    echo • src\core\ConfigManager.ps1 - Gestor de configuracion  
 )
 
-if not exist "%INSTALL_DIR%ProcessManagerModular.ps1" (
-    echo • ProcessManagerModular.ps1 - Interfaz principal
+if not exist "%INSTALL_DIR%src\core\ProcessManagerModular.ps1" (
+    echo • src\core\ProcessManagerModular.ps1 - Interfaz principal
 )
 
 if not exist "%INSTALL_DIR%ProcessManager.bat" (
@@ -183,22 +183,22 @@ echo.
 echo OPCIONES DISPONIBLES:
 echo.
 
-if exist "%INSTALL_DIR%ProcessManager.ps1" (
+if exist "%INSTALL_DIR%src\legacy\ProcessManager.ps1" (
     echo [OPCION 1] Version clasica disponible
     set /p "USE_CLASSIC=¿Usar version clasica? (S/N): "
     if /i "!USE_CLASSIC!"=="S" (
         echo Ejecutando version clasica...
-        powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%INSTALL_DIR%ProcessManager.ps1"
+        powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%INSTALL_DIR%src\legacy\ProcessManager.ps1"
         goto :END
     )
 )
 
-if exist "%INSTALL_DIR%ProcessManagerSimple.ps1" (
+if exist "%INSTALL_DIR%src\legacy\ProcessManagerSimple.ps1" (
     echo [OPCION 2] Version de consola disponible  
     set /p "USE_SIMPLE=¿Usar version de consola? (S/N): "
     if /i "!USE_SIMPLE!"=="S" (
         echo Ejecutando version de consola...
-        powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%INSTALL_DIR%ProcessManagerSimple.ps1"
+        powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%INSTALL_DIR%src\legacy\ProcessManagerSimple.ps1"
         goto :END
     )
 )

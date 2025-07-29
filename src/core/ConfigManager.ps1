@@ -12,6 +12,7 @@ function Load-ProcessConfig {
         $searchPaths = @(
             $ConfigPath,
             "$PSScriptRoot\$ConfigPath",
+            "$PSScriptRoot\..\..\config\$ConfigPath",
             "$env:USERPROFILE\Documents\ProcessManager\$ConfigPath",
             "$env:APPDATA\ProcessManager\$ConfigPath"
         )
