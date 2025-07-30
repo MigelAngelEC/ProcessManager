@@ -8,28 +8,16 @@ Set objShell = CreateObject("WScript.Shell")
 ' Obtener la ruta del script
 strPath = Left(WScript.ScriptFullName, InStrRev(WScript.ScriptFullName, "\"))
 
-' Verificar qué versión ejecutar
+' Verificar que existe el archivo principal
 Dim fso
 Set fso = CreateObject("Scripting.FileSystemObject")
 
-If fso.FileExists(strPath & "src\core\ProcessManagerModular_Enhanced_v2_Optimized.ps1") Then
-    ' Ejecutar versión optimizada v2 con debounce
-    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManagerModular_Enhanced_v2_Optimized.ps1"""
-ElseIf fso.FileExists(strPath & "src\core\ProcessManagerModular_Enhanced_v2.ps1") Then
-    ' Ejecutar versión mejorada v2
-    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManagerModular_Enhanced_v2.ps1"""
-ElseIf fso.FileExists(strPath & "src\core\ProcessManagerModular_Enhanced.ps1") Then
-    ' Ejecutar versión mejorada original
-    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManagerModular_Enhanced.ps1"""
-ElseIf fso.FileExists(strPath & "src\core\ProcessManagerModular.ps1") Then
-    ' Ejecutar versión modular original
-    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManagerModular.ps1"""
-ElseIf fso.FileExists(strPath & "src\legacy\ProcessManager.ps1") Then
-    ' Ejecutar versión legacy
-    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\legacy\ProcessManager.ps1"""
+If fso.FileExists(strPath & "src\core\ProcessManager.ps1") Then
+    ' Ejecutar Process Manager
+    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManager.ps1"""
 Else
-    ' Error: no se encontró ninguna versión
-    MsgBox "No se encontró ninguna versión de Process Manager en la estructura del proyecto.", vbCritical, "Error"
+    ' Error: no se encontró el archivo
+    MsgBox "No se encontró ProcessManager.ps1 en src\core\", vbCritical, "Error"
     WScript.Quit
 End If
 
