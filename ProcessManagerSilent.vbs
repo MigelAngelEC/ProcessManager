@@ -12,8 +12,14 @@ strPath = Left(WScript.ScriptFullName, InStrRev(WScript.ScriptFullName, "\"))
 Dim fso
 Set fso = CreateObject("Scripting.FileSystemObject")
 
-If fso.FileExists(strPath & "src\core\ProcessManagerModular_Enhanced.ps1") Then
-    ' Ejecutar versión mejorada
+If fso.FileExists(strPath & "src\core\ProcessManagerModular_Enhanced_v2_Optimized.ps1") Then
+    ' Ejecutar versión optimizada v2 con debounce
+    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManagerModular_Enhanced_v2_Optimized.ps1"""
+ElseIf fso.FileExists(strPath & "src\core\ProcessManagerModular_Enhanced_v2.ps1") Then
+    ' Ejecutar versión mejorada v2
+    strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManagerModular_Enhanced_v2.ps1"""
+ElseIf fso.FileExists(strPath & "src\core\ProcessManagerModular_Enhanced.ps1") Then
+    ' Ejecutar versión mejorada original
     strCommand = "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -File """ & strPath & "src\core\ProcessManagerModular_Enhanced.ps1"""
 ElseIf fso.FileExists(strPath & "src\core\ProcessManagerModular.ps1") Then
     ' Ejecutar versión modular original
