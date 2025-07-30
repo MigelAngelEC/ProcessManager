@@ -7,11 +7,19 @@ cd /d "%~dp0"
 echo Verificando estructura del proyecto...
 echo.
 
-if exist "src\core\ProcessManagerModular.ps1" (
-    echo [OK] Sistema modular encontrado
+if exist "src\core\ProcessManagerModular_Enhanced.ps1" (
+    echo [OK] Sistema modular mejorado encontrado
     echo.
-    echo Intentando ejecutar sistema modular...
-    powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\core\ProcessManagerModular.ps1'"
+    echo Intentando ejecutar sistema modular mejorado...
+    powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\core\ProcessManagerModular_Enhanced.ps1'"
+    
+    if %errorLevel% NEQ 0 (
+        echo.
+        echo Error con version mejorada, intentando version modular original...
+        if exist "src\core\ProcessManagerModular.ps1" (
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\core\ProcessManagerModular.ps1'"
+        )
+    )
     
     if %errorLevel% NEQ 0 (
         echo.
