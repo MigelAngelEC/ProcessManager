@@ -1,46 +1,36 @@
 @echo off
-title Process Manager Pro - Nueva Arquitectura
-color 0B
-
-echo ================================================================
-echo                    PROCESS MANAGER PRO v2.0
-echo                      Nueva Arquitectura MVVM
-echo ================================================================
+echo Ejecutando Process Manager Pro - Solucion Rapida
 echo.
 
 cd /d "%~dp0"
 
-REM Verificar si existe el nuevo launcher
-if exist "ProcessManager.ps1" (
-    echo [OK] Launcher principal encontrado
+echo Verificando estructura del proyecto...
+echo.
+
+if exist "src\core\ProcessManagerModular.ps1" (
+    echo [OK] Sistema modular encontrado
     echo.
-    echo Iniciando Process Manager...
-    echo.
-    
-    REM Ejecutar el nuevo launcher con todos los argumentos pasados
-    powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%~dp0ProcessManager.ps1" %*
+    echo Intentando ejecutar sistema modular...
+    powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\core\ProcessManagerModular.ps1'"
     
     if %errorLevel% NEQ 0 (
         echo.
-        echo [ERROR] Hubo un problema al ejecutar Process Manager
-        echo Codigo de error: %errorLevel%
+        echo Error con version modular, verificando versiones legacy...
+        if exist "src\legacy\ProcessManager.ps1" (
+            echo Probando version clasica...
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\legacy\ProcessManager.ps1'"
+        )
+        
+        if %errorLevel% NEQ 0 (
+            if exist "src\legacy\ProcessManagerSimple.ps1" (
+                echo Probando version consola...
+                powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\legacy\ProcessManagerSimple.ps1'"
+            )
+        )
     )
 ) else (
-    echo [ERROR] No se encuentra ProcessManager.ps1
-    echo.
-    
-    REM Intentar con la estructura antigua si existe
-    if exist "src\core\ProcessManagerModular.ps1" (
-        echo Detectada estructura antigua, intentando ejecutar...
-        powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\core\ProcessManagerModular.ps1'"
-    ) else if exist "src\legacy\ProcessManager.ps1" (
-        echo Ejecutando version legacy...
-        powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\legacy\ProcessManager.ps1'"
-    ) else (
-        echo.
-        echo No se encuentra ninguna version ejecutable del sistema.
-        echo Por favor, reinstale Process Manager o contacte soporte.
-    )
+    echo [ERROR] No se encuentra la estructura del proyecto
+    echo Por favor ejecute scripts\SetupManager.bat para configurar el proyecto
 )
 
 pause

@@ -32,16 +32,16 @@ try {
 
 # Configuracion de categorias y patrones de procesos
 $ProcessCategories = @{
-    "ASUS Software"          = @("asus_framework", "ArmourySocketServer", "ADU", "ASUS DriverHub", "ArmourySwAgent", "AcPowerNotification", "atkexComSvc", "AsusCertService", "AsusFanControlService", "AsusUpdateCheck")
-    "Comunicacion"           = @("WhatsApp", "ChatGPT", "claude", "copilot")
-    "Apple/iCloud"           = @("ApplePhotoStreams", "iCloudHome", "iCloudDrive", "iCloudPhotos", "iCloudCKKS", "iCloudOutlookConfig", "secd", "APSDaemon")
-    "Corsair/iCUE"           = @("iCUE", "QmlRenderer", "CorsairCpuIdService", "CorsairDeviceControlService", "iCUEDevicePluginHost", "iCUEUpdateService", "CorsairGamingAudioCfgService")
-    "Elgato Software"        = @("ElgatoAudioControlServer", "ElgatoAudioControlServerWatcher", "StreamDeck", "Elgato", "4KCaptureUtility", "GameCapture", "CameraHub")
-    "AVG Software"           = @("TuneupUI", "TuneupSvc", "Vpn", "VpnSvc")
-    "Driver Booster"         = @("Scheduler")
-    "Utilidades Sistema"     = @("Everything", "DisplayFusion", "DisplayFusionHookApp", "PowerToys", "RTSS", "RTSSHooksLoader", "EncoderServer", "MSIAfterburner", "ShareX", "TranslucentTB")
+    "ASUS Software" = @("asus_framework", "ArmourySocketServer", "ADU", "ASUS DriverHub", "ArmourySwAgent", "AcPowerNotification", "atkexComSvc", "AsusCertService", "AsusFanControlService", "AsusUpdateCheck")
+    "Comunicacion" = @("WhatsApp", "ChatGPT", "claude", "copilot")
+    "Apple/iCloud" = @("ApplePhotoStreams", "iCloudHome", "iCloudDrive", "iCloudPhotos", "iCloudCKKS", "iCloudOutlookConfig", "secd", "APSDaemon")
+    "Corsair/iCUE" = @("iCUE", "QmlRenderer", "CorsairCpuIdService", "CorsairDeviceControlService", "iCUEDevicePluginHost", "iCUEUpdateService", "CorsairGamingAudioCfgService")
+    "Elgato Software" = @("ElgatoAudioControlServer", "ElgatoAudioControlServerWatcher", "StreamDeck", "Elgato", "4KCaptureUtility", "GameCapture", "CameraHub")
+    "AVG Software" = @("TuneupUI", "TuneupSvc", "Vpn", "VpnSvc")
+    "Driver Booster" = @("Scheduler")
+    "Utilidades Sistema" = @("Everything", "DisplayFusion", "DisplayFusionHookApp", "PowerToys", "RTSS", "RTSSHooksLoader", "EncoderServer", "MSIAfterburner", "ShareX", "TranslucentTB")
     "Fondos/Personalizacion" = @("wallpaper32", "wallpaperservice32")
-    "Widgets/Microsoft"      = @("Widgets", "msedgewebview2", "StartMenuExperienceHost", "PhoneExperienceHost")
+    "Widgets/Microsoft" = @("Widgets", "msedgewebview2", "StartMenuExperienceHost", "PhoneExperienceHost")
 }
 
 # Archivo de configuracion
@@ -50,17 +50,17 @@ $ConfigFile = "$env:USERPROFILE\Documents\ProcessManagerConfig.json"
 # Funcion para obtener procesos por categoria
 function Get-ProcessesByCategory {
     param($Category, $Patterns)
-
+    
     $processes = @()
     foreach ($pattern in $Patterns) {
-        $foundProcesses = Get-Process | Where-Object {
-            $_.ProcessName -like "*$pattern*" -and $_.Id -ne $PID
+        $foundProcesses = Get-Process | Where-Object { 
+            $_.ProcessName -like "*$pattern*" -and $_.Id -ne $PID 
         }
         foreach ($proc in $foundProcesses) {
             $memoryMB = [math]::Round($proc.WorkingSet64 / 1MB, 2)
             $processes += [PSCustomObject]@{
-                Name     = $proc.ProcessName
-                PID      = $proc.Id
+                Name = $proc.ProcessName
+                PID = $proc.Id
                 MemoryMB = $memoryMB
                 Category = $Category
                 FullName = "$($proc.ProcessName) (PID: $($proc.Id)) - $memoryMB MB"
@@ -92,12 +92,12 @@ function Save-Config {
 # Funcion para cerrar procesos seleccionados
 function Close-SelectedProcesses {
     param($ProcessesToClose)
-
+    
     $results = @()
     $successCount = 0
     $errorCount = 0
     $totalMemoryFreed = 0
-
+    
     foreach ($proc in $ProcessesToClose) {
         try {
             $process = Get-Process -Id $proc.PID -ErrorAction Stop
@@ -111,20 +111,20 @@ function Close-SelectedProcesses {
             $errorCount++
         }
     }
-
+    
     $summary = "RESUMEN DE LA OPERACION`n" +
-    "===============================================`n" +
-    "Procesos cerrados exitosamente: $successCount`n" +
-    "Errores: $errorCount`n" +
-    "Memoria total liberada: $([math]::Round($totalMemoryFreed, 2)) MB`n`n" +
-    "DETALLES:`n" +
-    "===============================================`n" +
-    ($results -join "`n")
-
+               "===============================================`n" +
+               "Procesos cerrados exitosamente: $successCount`n" +
+               "Errores: $errorCount`n" +
+               "Memoria total liberada: $([math]::Round($totalMemoryFreed, 2)) MB`n`n" +
+               "DETALLES:`n" +
+               "===============================================`n" +
+               ($results -join "`n")
+    
     [System.Windows.Forms.MessageBox]::Show($summary, "Resultado Final", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
 }
 
-# Crear formulario principal con diseÃ±o moderno
+# Crear formulario principal con diseño moderno
 $Form = New-Object System.Windows.Forms.Form
 $Form.Text = "Process Manager Pro - Optimizador de Memoria"
 $Form.Size = New-Object System.Drawing.Size(1200, 800)
@@ -163,7 +163,7 @@ $MainContainer.Dock = "Fill"
 $MainContainer.Padding = New-Object System.Windows.Forms.Padding(20)
 $MainContainer.BackColor = [System.Drawing.Color]::FromArgb(250, 250, 250)
 
-# Crear splitter container para divisiÃ³n responsive
+# Crear splitter container para división responsive
 $SplitContainer = New-Object System.Windows.Forms.SplitContainer
 $SplitContainer.Dock = "Fill"
 $SplitContainer.SplitterDistance = 600
@@ -177,7 +177,7 @@ $LeftPanel.Font = New-Object System.Drawing.Font("Segoe UI", 11, [System.Drawing
 $LeftPanel.ForeColor = [System.Drawing.Color]::FromArgb(0, 80, 140)
 $LeftPanel.Padding = New-Object System.Windows.Forms.Padding(15)
 
-# Crear TreeView para mejor organizaciÃ³n
+# Crear TreeView para mejor organización
 $ProcessTreeView = New-Object System.Windows.Forms.TreeView
 $ProcessTreeView.Dock = "Fill"
 $ProcessTreeView.CheckBoxes = $true
@@ -208,7 +208,7 @@ $SelectedListView.Columns.Add("PID", 80) | Out-Null
 $SelectedListView.Columns.Add("Memoria (MB)", 100) | Out-Null
 $SelectedListView.Columns.Add("Categoria", 150) | Out-Null
 
-# Panel de estadÃ­sticas
+# Panel de estadísticas
 $StatsPanel = New-Object System.Windows.Forms.Panel
 $StatsPanel.Dock = "Bottom"
 $StatsPanel.Height = 60
@@ -230,14 +230,14 @@ $RightPanel.Controls.Add($SelectedListView)
 $AllProcesses = @{}
 $SelectedProcesses = @{}
 
-# FunciÃ³n para actualizar estadÃ­sticas
+# Función para actualizar estadísticas
 function Update-Stats {
     $selectedCount = $SelectedProcesses.Count
     $totalMemory = ($SelectedProcesses.Values | Measure-Object -Property MemoryMB -Sum).Sum
     if ($totalMemory -eq $null) { $totalMemory = 0 }
-
+    
     $StatsLabel.Text = "Estadisticas: $selectedCount procesos seleccionados | $([math]::Round($totalMemory, 2)) MB a liberar"
-
+    
     # Actualizar ListView
     $SelectedListView.Items.Clear()
     foreach ($proc in $SelectedProcesses.Values) {
@@ -249,18 +249,18 @@ function Update-Stats {
     }
 }
 
-# Poblar TreeView con categorÃ­as y procesos
+# Poblar TreeView con categorías y procesos
 foreach ($category in $ProcessCategories.Keys) {
     $processes = Get-ProcessesByCategory -Category $category -Patterns $ProcessCategories[$category]
-
+    
     if ($processes.Count -gt 0) {
         $categoryMemory = ($processes | Measure-Object -Property MemoryMB -Sum).Sum
-
-        # Crear nodo de categorÃ­a
+        
+        # Crear nodo de categoría
         $categoryNode = New-Object System.Windows.Forms.TreeNode("$category ($($processes.Count) procesos - $([math]::Round($categoryMemory, 2)) MB)")
         $categoryNode.ForeColor = [System.Drawing.Color]::FromArgb(0, 80, 140)
         $categoryNode.NodeFont = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing.FontStyle]::Bold)
-
+        
         # Agregar procesos como nodos hijos
         foreach ($process in $processes) {
             $processNode = New-Object System.Windows.Forms.TreeNode($process.FullName)
@@ -268,38 +268,38 @@ foreach ($category in $ProcessCategories.Keys) {
             $AllProcesses[$processNode] = $process
             $categoryNode.Nodes.Add($processNode) | Out-Null
         }
-
+        
         $ProcessTreeView.Nodes.Add($categoryNode) | Out-Null
     }
 }
 
-# Evento para manejar selecciÃ³n de checkboxes en TreeView
+# Evento para manejar selección de checkboxes en TreeView
 $ProcessTreeView.Add_AfterCheck({
-        param($sender, $e)
-
-        if ($e.Node.Tag -ne $null) {
-            # Es un proceso individual
-            $process = $e.Node.Tag
-            if ($e.Node.Checked) {
-                $SelectedProcesses[$e.Node] = $process
-            } else {
-                $SelectedProcesses.Remove($e.Node)
-            }
+    param($sender, $e)
+    
+    if ($e.Node.Tag -ne $null) {
+        # Es un proceso individual
+        $process = $e.Node.Tag
+        if ($e.Node.Checked) {
+            $SelectedProcesses[$e.Node] = $process
         } else {
-            # Es una categorÃ­a - marcar/desmarcar todos los hijos
-            foreach ($childNode in $e.Node.Nodes) {
-                $childNode.Checked = $e.Node.Checked
-                $process = $childNode.Tag
-                if ($e.Node.Checked) {
-                    $SelectedProcesses[$childNode] = $process
-                } else {
-                    $SelectedProcesses.Remove($childNode)
-                }
+            $SelectedProcesses.Remove($e.Node)
+        }
+    } else {
+        # Es una categoría - marcar/desmarcar todos los hijos
+        foreach ($childNode in $e.Node.Nodes) {
+            $childNode.Checked = $e.Node.Checked
+            $process = $childNode.Tag
+            if ($e.Node.Checked) {
+                $SelectedProcesses[$childNode] = $process
+            } else {
+                $SelectedProcesses.Remove($childNode)
             }
         }
-
-        Update-Stats
-    })
+    }
+    
+    Update-Stats
+})
 
 $LeftPanel.Controls.Add($ProcessTreeView)
 
@@ -307,17 +307,17 @@ $LeftPanel.Controls.Add($ProcessTreeView)
 $SplitContainer.Panel1.Controls.Add($LeftPanel)
 $SplitContainer.Panel2.Controls.Add($RightPanel)
 
-# Panel de botones con diseÃ±o moderno
+# Panel de botones con diseño moderno
 $ButtonPanel = New-Object System.Windows.Forms.Panel
 $ButtonPanel.Dock = "Bottom"
 $ButtonPanel.Height = 80
 $ButtonPanel.BackColor = [System.Drawing.Color]::FromArgb(240, 240, 240)
 $ButtonPanel.Padding = New-Object System.Windows.Forms.Padding(20, 15, 20, 15)
 
-# FunciÃ³n para crear botones modernos
+# Función para crear botones modernos
 function Create-ModernButton {
     param($Text, $BackColor, $ForeColor, $Width = 160)
-
+    
     $button = New-Object System.Windows.Forms.Button
     $button.Text = $Text
     $button.Size = New-Object System.Drawing.Size($Width, 50)
@@ -327,17 +327,17 @@ function Create-ModernButton {
     $button.FlatAppearance.BorderSize = 0
     $button.Font = New-Object System.Drawing.Font("Segoe UI", 10, [System.Drawing.FontStyle]::Bold)
     $button.Cursor = "Hand"
-
+    
     # Efectos hover
     $button.Add_MouseEnter({
-            $this.FlatAppearance.BorderSize = 2
-            $this.FlatAppearance.BorderColor = [System.Drawing.Color]::White
-        })
-
+        $this.FlatAppearance.BorderSize = 2
+        $this.FlatAppearance.BorderColor = [System.Drawing.Color]::White
+    })
+    
     $button.Add_MouseLeave({
-            $this.FlatAppearance.BorderSize = 0
-        })
-
+        $this.FlatAppearance.BorderSize = 0
+    })
+    
     return $button
 }
 
@@ -359,94 +359,94 @@ $ClearAllButton.Location = New-Object System.Drawing.Point(960, 15)
 
 # Eventos de botones
 $CloseButton.Add_Click({
-        if ($SelectedProcesses.Count -eq 0) {
-            [System.Windows.Forms.MessageBox]::Show("No hay procesos seleccionados para cerrar.", "Aviso", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
-            return
-        }
-
-        $totalMemory = ($SelectedProcesses.Values | Measure-Object -Property MemoryMB -Sum).Sum
-        $message = "CONFIRMACION DE CIERRE`n`n" +
-        "Estas a punto de cerrar $($SelectedProcesses.Count) procesos`n" +
-        "Memoria que se liberara: $([math]::Round($totalMemory, 2)) MB`n`n" +
-        "Esta accion no se puede deshacer.`n`n" +
-        "Deseas continuar?"
-
-        $result = [System.Windows.Forms.MessageBox]::Show($message, "Confirmar Cierre de Procesos", [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Question)
-        if ($result -eq "Yes") {
-            Close-SelectedProcesses -ProcessesToClose $SelectedProcesses.Values
-            $Form.Close()
-        }
-    })
+    if ($SelectedProcesses.Count -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No hay procesos seleccionados para cerrar.", "Aviso", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
+        return
+    }
+    
+    $totalMemory = ($SelectedProcesses.Values | Measure-Object -Property MemoryMB -Sum).Sum
+    $message = "CONFIRMACION DE CIERRE`n`n" +
+               "Estas a punto de cerrar $($SelectedProcesses.Count) procesos`n" +
+               "Memoria que se liberara: $([math]::Round($totalMemory, 2)) MB`n`n" +
+               "Esta accion no se puede deshacer.`n`n" +
+               "Deseas continuar?"
+    
+    $result = [System.Windows.Forms.MessageBox]::Show($message, "Confirmar Cierre de Procesos", [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Question)
+    if ($result -eq "Yes") {
+        Close-SelectedProcesses -ProcessesToClose $SelectedProcesses.Values
+        $Form.Close()
+    }
+})
 
 $SaveButton.Add_Click({
-        if ($SelectedProcesses.Count -eq 0) {
-            [System.Windows.Forms.MessageBox]::Show("No hay procesos seleccionados para guardar.", "Aviso", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
-            return
+    if ($SelectedProcesses.Count -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No hay procesos seleccionados para guardar.", "Aviso", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
+        return
+    }
+    
+    $configData = @()
+    foreach ($proc in $SelectedProcesses.Values) {
+        $configData += @{
+            Name = $proc.Name
+            Category = $proc.Category
         }
-
-        $configData = @()
-        foreach ($proc in $SelectedProcesses.Values) {
-            $configData += @{
-                Name     = $proc.Name
-                Category = $proc.Category
-            }
-        }
-        Save-Config -SelectedProcesses $configData
-    })
+    }
+    Save-Config -SelectedProcesses $configData
+})
 
 $LoadButton.Add_Click({
-        $savedConfig = Load-SavedConfig
-        if ($savedConfig.Count -gt 0) {
-            # Limpiar selecciÃ³n actual
-            foreach ($node in $ProcessTreeView.Nodes) {
-                $node.Checked = $false
-                foreach ($childNode in $node.Nodes) {
-                    $childNode.Checked = $false
-                }
+    $savedConfig = Load-SavedConfig
+    if ($savedConfig.Count -gt 0) {
+        # Limpiar selección actual
+        foreach ($node in $ProcessTreeView.Nodes) {
+            $node.Checked = $false
+            foreach ($childNode in $node.Nodes) {
+                $childNode.Checked = $false
             }
-            $SelectedProcesses.Clear()
-
-            # Aplicar configuraciÃ³n guardada
-            foreach ($savedProc in $savedConfig) {
-                foreach ($node in $ProcessTreeView.Nodes) {
-                    foreach ($childNode in $node.Nodes) {
-                        if ($childNode.Tag.Name -eq $savedProc.Name -and $childNode.Tag.Category -eq $savedProc.Category) {
-                            $childNode.Checked = $true
-                            $SelectedProcesses[$childNode] = $childNode.Tag
-                            break
-                        }
+        }
+        $SelectedProcesses.Clear()
+        
+        # Aplicar configuración guardada
+        foreach ($savedProc in $savedConfig) {
+            foreach ($node in $ProcessTreeView.Nodes) {
+                foreach ($childNode in $node.Nodes) {
+                    if ($childNode.Tag.Name -eq $savedProc.Name -and $childNode.Tag.Category -eq $savedProc.Category) {
+                        $childNode.Checked = $true
+                        $SelectedProcesses[$childNode] = $childNode.Tag
+                        break
                     }
                 }
             }
-
-            Update-Stats
-            [System.Windows.Forms.MessageBox]::Show("Configuracion cargada exitosamente!`n`nSe han seleccionado $($savedConfig.Count) procesos.", "Configuracion Cargada", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
-        } else {
-            [System.Windows.Forms.MessageBox]::Show("No se encontro ninguna configuracion guardada.", "Sin Configuracion", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
         }
-    })
+        
+        Update-Stats
+        [System.Windows.Forms.MessageBox]::Show("Configuracion cargada exitosamente!`n`nSe han seleccionado $($savedConfig.Count) procesos.", "Configuracion Cargada", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+    } else {
+        [System.Windows.Forms.MessageBox]::Show("No se encontro ninguna configuracion guardada.", "Sin Configuracion", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+    }
+})
 
 $RefreshButton.Add_Click({
-        $result = [System.Windows.Forms.MessageBox]::Show("Deseas actualizar la lista de procesos?`n`nEsto reiniciara la aplicacion.", "Actualizar Lista", [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Question)
-        if ($result -eq "Yes") {
-            $Form.Close()
-            Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Path)`""
-        }
-    })
+    $result = [System.Windows.Forms.MessageBox]::Show("Deseas actualizar la lista de procesos?`n`nEsto reiniciara la aplicacion.", "Actualizar Lista", [System.Windows.Forms.MessageBoxButtons]::YesNo, [System.Windows.Forms.MessageBoxIcon]::Question)
+    if ($result -eq "Yes") {
+        $Form.Close()
+        Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Path)`""
+    }
+})
 
 $SelectAllButton.Add_Click({
-        foreach ($node in $ProcessTreeView.Nodes) {
-            $node.Checked = $true
-        }
-    })
+    foreach ($node in $ProcessTreeView.Nodes) {
+        $node.Checked = $true
+    }
+})
 
 $ClearAllButton.Add_Click({
-        foreach ($node in $ProcessTreeView.Nodes) {
-            $node.Checked = $false
-        }
-        $SelectedProcesses.Clear()
-        Update-Stats
-    })
+    foreach ($node in $ProcessTreeView.Nodes) {
+        $node.Checked = $false
+    }
+    $SelectedProcesses.Clear()
+    Update-Stats
+})
 
 $ButtonPanel.Controls.Add($CloseButton)
 $ButtonPanel.Controls.Add($SaveButton)
@@ -462,7 +462,7 @@ $Form.Controls.Add($MainContainer)
 $Form.Controls.Add($ButtonPanel)
 $Form.Controls.Add($TitlePanel)
 
-# Expandir categorÃ­as por defecto
+# Expandir categorías por defecto
 foreach ($node in $ProcessTreeView.Nodes) {
     $node.Expand()
 }
