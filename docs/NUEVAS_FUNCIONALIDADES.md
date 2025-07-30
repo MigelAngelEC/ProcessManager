@@ -63,9 +63,20 @@
 
 ## 🚀 Cómo Ejecutar la Versión Mejorada
 
+### Opción 1: Con ventana de terminal (para ver mensajes de depuración)
 1. Ejecuta `ProcessManager.bat` como siempre
 2. El sistema detectará automáticamente la versión mejorada
 3. Si hay algún problema, volverá a la versión original
+
+### Opción 2: Sin ventana de terminal (experiencia más limpia)
+1. Ejecuta `ProcessManagerSilent.vbs`
+2. La aplicación se abrirá directamente sin mostrar consola
+3. La terminal se cerrará automáticamente al cerrar la GUI
+
+### 📌 Nuevo Comportamiento
+- **Auto-cierre de terminal**: Al cerrar la interfaz gráfica, la terminal también se cierra automáticamente
+- **División 50/50**: Los paneles ahora mantienen una proporción del 50% para mejor visibilidad
+- **Modo silencioso**: Opción de ejecutar sin ventana de consola usando el archivo VBS
 
 ## 📝 Notas Técnicas
 

@@ -692,6 +692,12 @@ $Form.FormBorderStyle = "Sizable"
 $Form.MinimumSize = New-Object System.Drawing.Size(1000, 700)
 $Form.Font = New-Object System.Drawing.Font("Segoe UI", 9)
 
+# Asegurar que la terminal se cierre cuando se cierre el formulario
+$Form.Add_FormClosing({
+    Save-UserPreferences
+    [Environment]::Exit(0)
+})
+
 # Configurar atajos de teclado
 $Form.KeyPreview = $true
 $Form.Add_KeyDown({
@@ -783,7 +789,13 @@ $SearchPanel.Controls.Add($ClearSearchButton)
 # SplitContainer principal
 $SplitContainer = New-Object System.Windows.Forms.SplitContainer
 $SplitContainer.Dock = "Fill"
-$SplitContainer.SplitterDistance = 600
+$SplitContainer.Orientation = "Vertical"  # Horizontal split (columnas lado a lado)
+$SplitContainer.SplitterWidth = 5
+$SplitContainer.IsSplitterFixed = $false  # Permitir ajuste manual
+
+# Establecer tamaño mínimo para cada panel
+$SplitContainer.Panel1MinSize = 300
+$SplitContainer.Panel2MinSize = 300
 
 # Panel izquierdo
 $LeftPanel = New-Object System.Windows.Forms.GroupBox
@@ -1147,9 +1159,43 @@ foreach ($node in $ProcessTreeView.Nodes) {
     $node.Expand()
 }
 
+# Configurar división inicial 50/50 después de cargar el formulario
+$Form.Add_Shown({
+    # Establecer división 50/50
+    $SplitContainer.SplitterDistance = [int]($SplitContainer.Width / 2)
+    
+    # Configurar el manejador de resize para mantener proporción al cambiar tamaño
+    $script:LastSplitterRatio = 0.5
+    
+    # Remover el handler anterior y agregar uno nuevo
+    $SplitContainer.remove_Resize($null)
+    
+    # Cuando el usuario mueve el splitter manualmente
+    $SplitContainer.Add_SplitterMoved({
+        if ($SplitContainer.Width -gt 0) {
+            $script:LastSplitterRatio = $SplitContainer.SplitterDistance / $SplitContainer.Width
+        }
+    })
+    
+    # Cuando se redimensiona la ventana
+    $Form.Add_Resize({
+        if ($Form.WindowState -ne "Minimized" -and $SplitContainer.Width -gt 0) {
+            # Mantener la proporción que el usuario estableció
+            $newDistance = [int]($SplitContainer.Width * $script:LastSplitterRatio)
+            # Respetar los límites mínimos
+            $newDistance = [Math]::Max($SplitContainer.Panel1MinSize, $newDistance)
+            $newDistance = [Math]::Min($SplitContainer.Width - $SplitContainer.Panel2MinSize - $SplitContainer.SplitterWidth, $newDistance)
+            $SplitContainer.SplitterDistance = $newDistance
+        }
+    })
+})
+
 # Mostrar formulario
 [System.Windows.Forms.Application]::EnableVisualStyles()
 $Form.ShowDialog()
 
 # Guardar preferencias al cerrar
 Save-UserPreferences
+
+# Cerrar la consola/terminal al cerrar la GUI
+[Environment]::Exit(0)

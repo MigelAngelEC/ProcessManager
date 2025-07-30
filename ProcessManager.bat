@@ -11,7 +11,7 @@ if exist "src\core\ProcessManagerModular_Enhanced.ps1" (
     echo [OK] Sistema modular mejorado encontrado
     echo.
     echo Intentando ejecutar sistema modular mejorado...
-    powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\core\ProcessManagerModular_Enhanced.ps1'"
+    powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -NoProfile -Command "& '%~dp0src\core\ProcessManagerModular_Enhanced.ps1'"
     
     if %errorLevel% NEQ 0 (
         echo.
